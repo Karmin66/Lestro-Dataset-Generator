@@ -5,7 +5,6 @@ from google import genai
 from google.genai import types
 from pydantic import BaseModel, Field
 
-# 1. STRUCTURAL CONTRACT FOR THE API
 class TroubleshootingCase(BaseModel):
     text: str = Field(description="A highly verbose engineering case structure: 'User: Technical Issue: [log] \\nAssistant: Root Cause & Resolution Blueprint: [fix]'")
 
@@ -15,10 +14,8 @@ class DatasetBatch(BaseModel):
 client = genai.Client()
 dataset_file = "dataset.json"
 
-# 2. FREE TIER OPTIMIZED LIMITS
-# 12 requests stays safely away from the 20 daily cap, preventing total lockout
 total_batches = 12  
-cases_per_batch = 15 # High density packaging per request
+cases_per_batch = 15
 
 master_prompt = """
 Act as an elite Principal DevOps and Systems Infrastructure Engineer. Generate exactly {cases_count} unique, highly dense technical troubleshooting cases for training a model named Lestro.
@@ -46,7 +43,7 @@ for batch in range(1, total_batches + 1):
     
     try:
         response = client.models.generate_content(
-            model='gemini-2.5-pro', # Pro provides much deeper, longer text generation than Flash
+            model='gemini-2.5-flash',
             contents=master_prompt.format(cases_count=cases_per_batch),
             config=types.GenerateContentConfig(
                 temperature=1.0,
@@ -60,18 +57,15 @@ for batch in range(1, total_batches + 1):
             time.sleep(5)
             continue
             
-        # Parse the structured cloud data flawlessly
         batch_json = json.loads(response.text)
         extracted_cases = batch_json.get("cases", [])
         
         all_records.extend(extracted_cases)
         print(f"Success! Added {len(extracted_cases)} records. Current total dataset size: {len(all_records)}")
         
-        # Incremental save to disk
         with open(dataset_file, "w", encoding="utf-8") as f:
             json.dump(all_records, f, indent=2, ensure_ascii=False)
             
-        # Generous wait time ensures we do not hit requests-per-minute (RPM) limits either
         print("Waiting 20 seconds to keep the API quota completely stable...")
         time.sleep(20)
         
