@@ -7,7 +7,7 @@ It communicates directly with Google's Gemini API to generate highly realistic t
 ----------------------------------------------
 
 
-What This Script Does & How Much It Creates?
+# What This Script Does & How Much It Creates?
 
 The Problem: Fine-tuning an AI model requires millions of characters of data. Writing thousands of high-quality technical examples by hand is nearly impossible.
 
@@ -24,7 +24,7 @@ Character Count = Approximately 350,000 to 500,000 characters of high-density te
 ----------------------------------------------
 
 
-Prerequisites (What You Need)
+# Prerequisites (What You Need)
 Before running the script, you need to have a few basic tools installed on your computer:
 
 [Python 3.10](https://www.python.org/downloads/) or higher installed on your system.
@@ -36,7 +36,7 @@ An existing JSON file (Optional). If you already have a dataset.json file, the s
 ----------------------------------------------
 
 
-Step-by-Step Setup Guide
+# Step-by-Step Setup Guide
 
 Step 1: Install the Required Libraries
 Open your terminal or PowerShell window and install the official Google GenAI and Pydantic libraries by running:
