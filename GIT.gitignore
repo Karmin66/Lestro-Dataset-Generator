@@ -1,0 +1,7 @@
+# Ignore local virtual environment
+my_env/
+.env
+
+# Ignore your dataset file so it stays private on your local machine
+dataset.json
+dataset_expanded.json
