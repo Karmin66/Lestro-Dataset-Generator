@@ -34,7 +34,7 @@ if os.path.exists(dataset_file):
     try:
         with open(dataset_file, "r", encoding="utf-8") as f:
             all_records = json.load(f)
-            print(f"🔄 Loaded {len(all_records)} existing cases from backup. Standing by to append...")
+            print(f" Loaded {len(all_records)} existing cases from backup. Standing by to append...")
     except Exception as e:
         print(f" Could not read backup file, starting fresh: {e}")
 
@@ -46,7 +46,7 @@ for batch in range(1, total_batches + 1):
     
     try:
         response = client.models.generate_content(
-            model='gemini-2.5-pro', # Pro provides much deeper, longer text generation than Flash
+            model='gemini-2.5-flash', # Flash model is optimized for high output and cost-efficiency, ideal for dataset generation tasks
             contents=master_prompt.format(cases_count=cases_per_batch),
             config=types.GenerateContentConfig(
                 temperature=1.0,
