@@ -71,13 +71,18 @@ for batch in range(1, total_batches + 1):
         with open(dataset_file, "w", encoding="utf-8") as f:
             json.dump(all_records, f, indent=2, ensure_ascii=False)
             
-        # Generous wait time ensures we do not hit requests-per-minute (RPM) limits either
-        print("Waiting 20 seconds to keep the API quota completely stable...")
-        time.sleep(20)
+        # Visual RPM/TPM Timer
+        for i in range(60, 0, -1):
+            import sys
+            sys.stdout.write(f"\r Waiting for API limits to reset: {i} seconds remaining... ")
+            sys.stdout.flush()
+            time.sleep(1)
+        sys.stdout.write("\rTimer Finished. Ready for next request!     \n")
+        sys.stdout.flush()
         
     except Exception as e:
-        print(f"Anomaly encountered: {e}")
-        print("Cooling down for 30 seconds before trying the next request step...")
-        time.sleep(30)
+        print(f"\nAnomaly encountered: {e}")
+        print("Safety protocol activated. Waiting 90 seconds for full reset of API limits...")
+        time.sleep(90)
 
 print(f"\n Process Complete! Your file '{dataset_file}' is securely saved with {len(all_records)} total cases.")
