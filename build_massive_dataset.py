@@ -17,8 +17,8 @@ dataset_file = "dataset.json"
 
 # 2. FREE TIER OPTIMIZED LIMITS
 # 12 requests stays safely away from the 20 daily cap, preventing total lockout
-total_batches = 12  
-cases_per_batch = 15 # High density packaging per request
+total_batches = 24 
+cases_per_batch = 5 # High density packaging per request
 
 master_prompt = """
 Act as an elite Principal DevOps and Systems Infrastructure Engineer. Generate exactly {cases_count} unique, highly dense technical troubleshooting cases for training a model named Lestro.
